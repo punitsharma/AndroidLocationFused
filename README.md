@@ -1,6 +1,6 @@
 # AndroidLocationFused
 
-# Sample for Fused Location And Reverse Geocodeing !!
+# Sample for Fused Location And Reverse Geocoding !!
 
 ![alt tag](http://s17.postimg.org/jonwcznj3/Screenshot_2015_02_25_16_43_51.png)
 
