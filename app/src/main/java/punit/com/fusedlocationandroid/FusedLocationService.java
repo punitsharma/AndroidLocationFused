@@ -14,10 +14,10 @@ import com.google.android.gms.location.LocationServices;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class FusedLocationService implements
-        LocationListener,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+/**
+ * Created by Punit on 2/25/2015.
+ */
+public class FusedLocationService implements LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final long INTERVAL = 1000 * 30;
     private static final long FASTEST_INTERVAL = 1000 * 5;
     private static final long ONE_MIN = 1000 * 60;
