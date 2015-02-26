@@ -13,12 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-/**
- * Created by Punit on 2/25/2015.
- */
+
 public class MainActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = "MyActivity";

@@ -1,5 +1,8 @@
 package punit.com.fusedlocationandroid;
 
+/**
+ * Created by Punit on 2/25/2015.
+ */
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -7,13 +10,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by Punit on 2/25/2015.
- */
 public class LocationAddress {
     private static final String TAG = "LocationAddress";
 
