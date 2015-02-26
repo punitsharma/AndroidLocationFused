@@ -13,11 +13,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
-
+/**
+ * Created by Punit on 2/25/2015.
+ */
 public class MainActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = "MyActivity";
@@ -26,6 +32,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     FusedLocationService fusedLocationService;
     Location location;
     String locationResult;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btnFusedLocation = (Button) findViewById(R.id.btnGPSShowLocation);
         btnFusedLocation.setOnClickListener(this);
         btnLocAddress.setOnClickListener(this);
-
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -65,6 +71,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
             GooglePlayServicesUtil.getErrorDialog(status, this, 0).show();
             return false;
         }
+    }
+
+
+
+    private void setUpMapIfNeeded() {
+        if (mMap != null) {
+            return;
+        }
+        mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapView)).getMap();
+    }
+
+    protected GoogleMap getMap() {
+        setUpMapIfNeeded();
+        return mMap;
     }
 
 
@@ -113,6 +133,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     "Accuracy: " + accuracy + "\n" +
                     "Elapsed Time: " + elapsedTimeSecs + " secs" + "\n" +
                     "Provider: " + provider + "\n";
+            getMap().setMyLocationEnabled(true);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 11);
+            getMap().animateCamera(cameraUpdate);
+
+
         } else {
             locationResult = "Location Not Available!";
         }

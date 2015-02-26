@@ -13,65 +13,89 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="25sp" />
 
     <LinearLayout
         android:layout_below="@id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:weightSum="2">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
             android:layout_weight="1"
-            android:gravity="center_horizontal">
+            android:weightSum="2">
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Show Location"
-                android:id="@+id/btnGPSShowLocation"
-                android:layout_toEndOf="@+id/textView"
-                android:layout_marginTop="53dp"
-                android:layout_below="@+id/textView"
-                android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvLocation"
-                android:layout_marginTop="30dp"
-                />
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show Location"
+                    android:id="@+id/btnGPSShowLocation"
+                    android:layout_toEndOf="@+id/textView"
+                    android:layout_marginTop="53dp"
+                    android:layout_below="@+id/textView"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvLocation"
+                    android:layout_marginTop="30dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show Address"
+                    android:id="@+id/btnGPSShowLocationAddress"
+                    android:layout_toEndOf="@+id/textView"
+                    android:layout_marginTop="53dp"
+                    android:layout_below="@+id/textView"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvLocationAddress"
+                    android:layout_marginTop="30dp" />
+            </LinearLayout>
         </LinearLayout>
+
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center_horizontal">
+            android:orientation="vertical">
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Show Address"
-                android:id="@+id/btnGPSShowLocationAddress"
-                android:layout_toEndOf="@+id/textView"
-                android:layout_marginTop="53dp"
-                android:layout_below="@+id/textView"
-                android:layout_alignParentStart="true" />
+            <fragment
+                android:id="@+id/mapView"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvLocationAddress"
-                android:layout_marginTop="30dp"/>
+
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>
