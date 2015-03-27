@@ -4,5 +4,7 @@
     <string name="app_name">Location and Address</string>
     <string name="hello_world">Location World!</string>
     <string name="action_settings">Settings</string>
+    <string name="show_location">Current Location</string>
+    <string name="show_address">Show Address</string>
 
 </resources>

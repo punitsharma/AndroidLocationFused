@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,18 +14,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by Punit on 2/25/2015.
  */
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener, GoogleMap.OnMarkerDragListener {
 
     private static final String TAG = "MyActivity";
     Button btnFusedLocation, btnLocAddress;
@@ -33,6 +39,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     Location location;
     String locationResult;
     private GoogleMap mMap;
+    MarkerOptions markerOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +81,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
 
-
     private void setUpMapIfNeeded() {
         if (mMap != null) {
             return;
         }
         mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapView)).getMap();
+        mMap.setOnMarkerDragListener(this);
     }
 
     protected GoogleMap getMap() {
@@ -114,8 +121,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
 
-    public void getLocationInBackground()
-    {
+    public void getLocationInBackground() {
         location = fusedLocationService.getLocation();
         locationResult = "";
         if (null != location) {
@@ -133,16 +139,25 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     "Accuracy: " + accuracy + "\n" +
                     "Elapsed Time: " + elapsedTimeSecs + " secs" + "\n" +
                     "Provider: " + provider + "\n";
+
+
             getMap().setMyLocationEnabled(true);
+            CircleOptions circleOptions = new CircleOptions().center(new LatLng(location.getLatitude(), location.getLongitude())).radius(10000).strokeWidth(2).strokeColor(Color.TRANSPARENT)
+                    .fillColor(Color.parseColor("#500084d3"));
+
+            getMap().addCircle(circleOptions);
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 11);
             getMap().animateCamera(cameraUpdate);
 
-
+            markerOption = new MarkerOptions();
+            mMap.addMarker(markerOption
+                    .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .title("Location")
+                    .draggable(true)).showInfoWindow();
         } else {
             locationResult = "Location Not Available!";
         }
     }
-
 
 
     public void showSettingsAlert() {
@@ -166,6 +181,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 });
         alertDialog.show();
     }
+
+     @Override
+     public void onMarkerDragStart(Marker marker) {
+
+     }
+
+     @Override
+     public void onMarkerDrag(Marker marker) {
+
+     }
+
+     @Override
+     public void onMarkerDragEnd(Marker marker) {
+         LatLng dragPosition = marker.getPosition();
+         double dragLat = dragPosition.latitude;
+         double dragLong = dragPosition.longitude;
+
+         LocationAddress locationAddress = new LocationAddress();
+         locationAddress.getAddressFromLocation(dragLat, dragLong,
+                 getApplicationContext(), new GeocoderHandler());
+         Toast.makeText(getApplicationContext(), "Address Changed !!", Toast.LENGTH_LONG).show();
+     }
 
     class GeocoderHandler extends Handler {
         @Override
